@@ -9,7 +9,7 @@ template <typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
 
 template <Arithmetic T>
-class Graph<T> {
+class Graph {
 	private:
 		std::vector< std::vector<T> > paths_weights_; 
 		uint16_t num_nodes_ = 0;
