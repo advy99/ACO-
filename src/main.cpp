@@ -15,6 +15,7 @@ int main() {
 		frame_start = SDL_GetTicks();
 
 		interface.handle_events();
+		interface.render();
 
 		frame_time = SDL_GetTicks() - frame_start;
 
