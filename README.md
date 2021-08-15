@@ -1,6 +1,6 @@
 # ACO++
 
-My implementation of an Ant Colony Optimization for solving the Travelling Salesman Problem plus a graphic representation using GLFW.
+My implementation of an Ant Colony Optimization for solving the Travelling Salesman Problem plus a graphic representation using SDL2.
 
 # WIP
 
