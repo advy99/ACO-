@@ -8,7 +8,7 @@ OBJ      = $(HOME)/obj
 
 # flags de compilacion por defecto
 MENSAJE := "Compilando\ usando\ C++20,\ sin\ optimización\ de\ máximo\ nivel\ y\ con\ todos\ los\ warnings\ activados"
-OPTIMIZACION ?= 3
+OPTIMIZACION ?= 2
 
 ifeq ($(DEBUG), 1)
 # target para debug (cambiamos flags y el mensaje)
@@ -22,7 +22,7 @@ O_LEVEL := -O$(strip $(OPTIMIZACION))
 
 CXXFLAGS = -std=c++20 $(O_LEVEL) $(F_OPENMP) $(F_GPROF) -Wall -Wextra -Wfloat-equal -Wpedantic
 
-SDL_LINK = -lSDL2 -lSDL2_image
+SDL_LINK = -lSDL2 -lSDL2_image -lSDL2_gfx
 
 # objetivo principal
 OBJETIVO = $(BIN)/main
