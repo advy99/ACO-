@@ -35,26 +35,26 @@ uint32_t Color :: get_color() const noexcept {
 
 }
 
-void Color :: set_color(const uint32_t color) const noexcept {
+void Color :: set_color(const uint32_t color) noexcept {
 	red_ = static_cast<uint8_t>( (color >> 24) & 0x000000FF);
 	green_ = static_cast<uint8_t>( (color >> 16) & 0x000000FF);
 	blue_ = static_cast<uint8_t>( (color >> 8) & 0x000000FF);
 	alpha_ = static_cast<uint8_t>( color & 0x000000FF);
 }
 
-void Color :: set_red(const uint8_t red) const noexcept {
+void Color :: set_red(const uint8_t red) noexcept {
 	red_ = red;
 }
 
-void Color :: set_green(const uint8_t green) const noexcept {
+void Color :: set_green(const uint8_t green) noexcept {
 	green_ = green;
 }
 
-void Color :: set_blue(const uint8_t blue) const noexcept {
+void Color :: set_blue(const uint8_t blue) noexcept {
 	blue_ = blue;
 }
 
-void Color :: set_alpha(const uint8_t alpha) const noexcept {
+void Color :: set_alpha(const uint8_t alpha) noexcept {
 	alpha_ = alpha;
 }
 

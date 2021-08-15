@@ -1,6 +1,8 @@
 #ifndef COLOR_HPP
 #define COLOR_HPP
 
+#include "aux.hpp"
+
 class Color {
 	private:
 		uint8_t red_;
@@ -19,14 +21,14 @@ class Color {
 
 		uint32_t get_color() const noexcept;
 
-		void set_color(const uint32_t color) const noexcept;
+		void set_color(const uint32_t color) noexcept;
 
-		void set_red(const uint8_t red) const noexcept;
-		void set_green(const uint8_t green) const noexcept;
-		void set_blue(const uint8_t blue) const noexcept;
-		void set_alpha(const uint8_t alpha) const noexcept;
+		void set_red(const uint8_t red) noexcept;
+		void set_green(const uint8_t green) noexcept;
+		void set_blue(const uint8_t blue) noexcept;
+		void set_alpha(const uint8_t alpha) noexcept;
 
-}
+};
 
 
 #endif 
