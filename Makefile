@@ -26,7 +26,7 @@ SDL_LINK = -lSDL2 -lSDL2_image -lSDL2_gfx
 
 # objetivo principal
 OBJETIVO = $(BIN)/main
-OBJETOS = $(OBJ)/main.o $(OBJ)/ACOppInterface.o
+OBJETOS = $(OBJ)/main.o $(OBJ)/ACOppInterface.o $(OBJ)/Color.o $(OBJ)/Rectangle.o
 
 
 # variables para el contador de reglas
@@ -68,6 +68,11 @@ $(OBJETIVO): $(OBJETOS)
 $(OBJ)/ACOppInterface.o: $(SRC)/ACOppInterface.cpp $(INC)/ACOppInterface.hpp
 	$(call compilar_objeto,$<,$@, $(SDL_LINK))
 
+$(OBJ)/Color.o: $(SRC)/Color.cpp $(INC)/Color.hpp
+	$(call compilar_objeto,$<,$@, $(SDL_LINK))
+
+$(OBJ)/Rectangle.o: $(SRC)/Rectangle.cpp $(INC)/Rectangle.hpp
+	$(call compilar_objeto,$<,$@, $(SDL_LINK))
 
 $(OBJ)/main.o: $(SRC)/main.cpp 
 	$(call compilar_objeto,$<,$@, $(SDL_LINK))
