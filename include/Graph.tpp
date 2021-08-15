@@ -26,8 +26,7 @@ bool Graph<T> :: is_connected ( const uint16_t first_node, const uint16_t second
 	bool result;
 
 	if constexpr (std::is_floating_point_v<T>) {
-		// NOTE: Leave "- 0.0" for readability, i want cost_between_nodes to be zero
-		result = std::abs(cost_between_nodes - 0.0) < std::numeric_limits<T>::epsilon();
+		result = are_equals(cost_between_nodes, 0.0);
 	} else {
 		result = cost_between_nodes != 0;
 	}
