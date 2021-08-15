@@ -32,7 +32,7 @@ class Graph {
 		
 
 		// paths modification methods
-		void connect(const uint16_t first_node, const uint16_t second_node, const T cost) noexcept;
+		void connect(uint16_t first_node, uint16_t second_node, const T cost) noexcept;
 
 		void disconnect(const uint16_t first_node, const uint16_t second_node) noexcept;
 
