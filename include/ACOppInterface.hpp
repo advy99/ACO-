@@ -5,6 +5,8 @@
 #include <SDL2/SDL_image.h>
 #include <memory>
 
+#include "Rectangle.hpp"
+
 
 struct SDL_WindowDeleter {
 	void operator()(SDL_Window * window);
@@ -19,12 +21,16 @@ class ACOppInterface {
 		bool running_ = false;
 
 		std::unique_ptr<SDL_Window, SDL_WindowDeleter> window_ = nullptr;
-		std::unique_ptr<SDL_Renderer, SDL_RendererDeleter> renderer_ = nullptr;
+		std::shared_ptr<SDL_Renderer> renderer_ = nullptr;
 
 		int32_t current_frame_ = 0;
 
 		// TODO: Create a base class for all objects we will show 
 		// std::vector<> objects_;
+	
+		std::unique_ptr<Rectangle> background;
+		std::unique_ptr<Rectangle> rect1;
+		std::unique_ptr<Rectangle> rect2;
 	
 	public:
 
@@ -51,6 +57,8 @@ class ACOppInterface {
 
 		uint32_t width();
 		uint32_t height();
+
+		std::shared_ptr<SDL_Renderer> renderer() const;
 		
 };
 

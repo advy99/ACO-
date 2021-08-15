@@ -28,7 +28,7 @@ bool ACOppInterface :: init ( const std::string & title,
 			std::cerr << "SDL could not create window. SDL_Error: " << SDL_GetError() << std::endl;
 			success = false;	
 		} else {
-			renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0));
+			renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), SDL_RendererDeleter());
 
 			if (renderer_ == nullptr ) {
 				std::cerr << "SDL could not create renderer. SDL_Error: " << SDL_GetError() << std::endl;
@@ -36,6 +36,10 @@ bool ACOppInterface :: init ( const std::string & title,
 			} else {
 				// TODO: Inicializar los objetos que tengamos
 				SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
+
+				background = std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT);
+				rect1 = std::make_unique<Rectangle>(50, 55, 100, 100, Color(255, 0, 0, 190), false); 
+				rect2 = std::make_unique<Rectangle>(80, 80, 300, 100, Color(0, 0, 0, 255), true); 
 			}
 		}
 
@@ -52,6 +56,9 @@ void ACOppInterface :: render () {
 	SDL_RenderClear(renderer_.get());
 
 	// TODO: Dibujar objetos
+	background->draw(renderer_);
+	rect1->draw(renderer_);
+	rect2->draw(renderer_);
 
 	SDL_RenderPresent(renderer_.get());
 
@@ -65,9 +72,13 @@ void ACOppInterface :: handle_events() {
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) {
-		if ( event.type == SDL_QUIT || event.type == SDL_KEYDOWN ) {
+		if ( event.type == SDL_QUIT) {
 			running_ = false;
 		}
 	}
 
+}
+
+std::shared_ptr<SDL_Renderer> ACOppInterface :: renderer() const {
+	return renderer_;
 }
