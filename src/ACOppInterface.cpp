@@ -35,6 +35,7 @@ bool ACOppInterface :: init ( const std::string & title,
 				success = false;	
 			} else {
 				// TODO: Inicializar los objetos que tengamos
+				SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
 			}
 		}
 
@@ -58,4 +59,15 @@ void ACOppInterface :: render () {
 
 bool ACOppInterface :: running() const {
 	return running_;
+}
+
+void ACOppInterface :: handle_events() {
+	SDL_Event event;
+
+	while (SDL_PollEvent(&event)) {
+		if ( event.type == SDL_QUIT || event.type == SDL_KEYDOWN ) {
+			running_ = false;
+		}
+	}
+
 }

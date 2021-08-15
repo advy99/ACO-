@@ -41,6 +41,8 @@ class ACOppInterface {
 
 		void update();
 
+		void handle_events();
+
 		void clean();
 
 		bool running() const;

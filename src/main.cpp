@@ -14,6 +14,8 @@ int main() {
 	while ( interface.running() ) {
 		frame_start = SDL_GetTicks();
 
+		interface.handle_events();
+
 		frame_time = SDL_GetTicks() - frame_start;
 
 		if (frame_time < DELAY_TIME ) {
