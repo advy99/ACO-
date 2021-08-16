@@ -1,4 +1,7 @@
 #include "ACOppInterface.hpp"
+#include "Rectangle.hpp"
+#include "Circle.hpp"
+#include "Line.hpp"
 #include <iostream>
 
 void SDL_WindowDeleter :: operator()(SDL_Window * window) {
@@ -33,7 +36,9 @@ ACOppInterface :: ACOppInterface ( const std::string & title,
 			objects_.push_back(std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT));
 			objects_.push_back(std::make_unique<Rectangle>(50, 55, 100, 100, Color(255, 0, 0, 190), false)); 
 			objects_.push_back(std::make_unique<Rectangle>(80, 80, 300, 100, Color(0, 0, 0, 255), true)); 
-			objects_.push_back(std::make_unique<Circle>(380, 80, 30, Color(0, 0, 200, 255), true)); 
+			objects_.push_back(std::make_unique<Circle>(380, 80, 50, Color(0, 0, 200, 255), true)); 
+			objects_.push_back(std::make_unique<Circle>(380, 280, 50, Color(0, 0, 200, 255), false)); 
+			objects_.push_back(std::make_unique<Line>(50, 400, 600, 370, 7, Color(50, 100, 200, 255))); 
 		}
 	}
 

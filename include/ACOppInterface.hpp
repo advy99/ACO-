@@ -4,8 +4,6 @@
 #include "aux.hpp"
 
 #include "Figure.hpp"
-#include "Rectangle.hpp"
-#include "Circle.hpp"
 
 
 struct SDL_WindowDeleter {
