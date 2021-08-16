@@ -7,7 +7,7 @@ Rectangle :: Rectangle (const int16_t x, const int16_t y,
 {
 }
 
-void Rectangle :: draw(std::shared_ptr<SDL_Renderer> renderer) {
+void Rectangle :: draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept {
 	if ( filled_ ) {
 		boxColor(renderer.get(), x_position_, y_position_, x_position_ + width_, y_position_ + height_, color_.get_color());
 	} else {

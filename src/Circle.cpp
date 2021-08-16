@@ -6,7 +6,7 @@ Circle :: Circle (const int16_t x, const int16_t y, const int16_t radius_in_px,
 {
 }
 
-void Circle :: draw(std::shared_ptr<SDL_Renderer> renderer) {
+void Circle :: draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept {
 	if ( filled_ ) {
 		filledCircleColor(renderer.get(), x_position_, y_position_, radius_in_px_, color_.get_color());
 	} else {

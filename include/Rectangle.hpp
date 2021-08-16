@@ -15,7 +15,7 @@ class Rectangle : public Figure {
 					 const int16_t width, const int16_t height,
 					 const Color & color = {255, 255, 255, 255}, const bool filled = true);
 
-		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) override;
+		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept override;
 		
 		int16_t width() const noexcept;
 		int16_t height() const noexcept;

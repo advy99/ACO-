@@ -18,7 +18,7 @@ class Figure {
 	
 	public:
 
-		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) = 0;
+		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept = 0;
 
 		int16_t x() const noexcept;
 		int16_t y() const noexcept;

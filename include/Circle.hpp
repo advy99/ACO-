@@ -12,7 +12,7 @@ class Circle : public Figure {
 		Circle(const int16_t x, const int16_t y, const int16_t radius_in_px, 
 				 const Color & color = {255, 255, 255, 255}, const bool filled = true);
 
-		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) override;
+		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept override;
 
 		int16_t radius_in_px () const noexcept;
 
