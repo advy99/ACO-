@@ -23,3 +23,10 @@ int16_t Rectangle :: height() const noexcept {
 	return height_;
 }
 
+void Rectangle :: set_width(const int16_t width) noexcept {
+	width_ = width;
+}
+
+void Rectangle :: set_height(const int16_t height) noexcept {
+	height_ = height;
+}
