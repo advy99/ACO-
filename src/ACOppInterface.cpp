@@ -40,6 +40,7 @@ bool ACOppInterface :: init ( const std::string & title,
 				background = std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT);
 				rect1 = std::make_unique<Rectangle>(50, 55, 100, 100, Color(255, 0, 0, 190), false); 
 				rect2 = std::make_unique<Rectangle>(80, 80, 300, 100, Color(0, 0, 0, 255), true); 
+				circle1 = std::make_unique<Circle>(380, 80, 30, Color(0, 0, 200, 255), true); 
 			}
 		}
 
@@ -59,6 +60,7 @@ void ACOppInterface :: render () {
 	background->draw(renderer_);
 	rect1->draw(renderer_);
 	rect2->draw(renderer_);
+	circle1->draw(renderer_);
 
 	SDL_RenderPresent(renderer_.get());
 

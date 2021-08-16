@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "Rectangle.hpp"
+#include "Circle.hpp"
 
 
 struct SDL_WindowDeleter {
@@ -31,6 +32,7 @@ class ACOppInterface {
 		std::unique_ptr<Rectangle> background;
 		std::unique_ptr<Rectangle> rect1;
 		std::unique_ptr<Rectangle> rect2;
+		std::unique_ptr<Circle> circle1;
 	
 	public:
 
