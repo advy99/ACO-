@@ -7,48 +7,37 @@ void SDL_WindowDeleter :: operator()(SDL_Window * window) {
 
 void SDL_RendererDeleter :: operator()(SDL_Renderer * renderer) {
 	SDL_DestroyRenderer(renderer);
-	SDL_Quit();
 }
 
 
 
-bool ACOppInterface :: init ( const std::string & title, 
-										const uint32_t X_POS, const uint32_t Y_POS,
-										const uint32_t WIDTH, const uint32_t HEIGHT,
-										const int32_t FLAGS) {
-	bool success = true;
+ACOppInterface :: ACOppInterface ( const std::string & title, 
+											  const uint32_t X_POS, const uint32_t Y_POS,
+											  const uint32_t WIDTH, const uint32_t HEIGHT,
+											  const int32_t FLAGS) {
 
-	if ( SDL_Init(SDL_INIT_EVERYTHING ) < 0 ) {
-		std::cerr << "SDL could not initialize. SDL_Error: " << SDL_GetError() << std::endl;
-		success = false;
+	window_.reset(SDL_CreateWindow(title.c_str(), X_POS, Y_POS, WIDTH, HEIGHT, FLAGS));
+	
+	if ( window_ == nullptr) {
+		throw std::runtime_error("SDL could not create window. SDL_Error: " + std::string(SDL_GetError()) + "\n");
 	} else {
-		window_.reset(SDL_CreateWindow(title.c_str(), X_POS, Y_POS, WIDTH, HEIGHT, FLAGS));
-		
-		if ( window_ == nullptr) {
-			std::cerr << "SDL could not create window. SDL_Error: " << SDL_GetError() << std::endl;
-			success = false;	
+		renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), SDL_RendererDeleter());
+
+		if (renderer_ == nullptr ) {
+			throw std::runtime_error("SDL could not create renderer. SDL_Error: " + std::string(SDL_GetError()) + "\n");
 		} else {
-			renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), SDL_RendererDeleter());
+			// TODO: Inicializar los objetos que tengamos
+			SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
 
-			if (renderer_ == nullptr ) {
-				std::cerr << "SDL could not create renderer. SDL_Error: " << SDL_GetError() << std::endl;
-				success = false;	
-			} else {
-				// TODO: Inicializar los objetos que tengamos
-				SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
-
-				background = std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT);
-				rect1 = std::make_unique<Rectangle>(50, 55, 100, 100, Color(255, 0, 0, 190), false); 
-				rect2 = std::make_unique<Rectangle>(80, 80, 300, 100, Color(0, 0, 0, 255), true); 
-				circle1 = std::make_unique<Circle>(380, 80, 30, Color(0, 0, 200, 255), true); 
-			}
+			
+			objects_.push_back(std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT));
+			objects_.push_back(std::make_unique<Rectangle>(50, 55, 100, 100, Color(255, 0, 0, 190), false)); 
+			objects_.push_back(std::make_unique<Rectangle>(80, 80, 300, 100, Color(0, 0, 0, 255), true)); 
+			objects_.push_back(std::make_unique<Circle>(380, 80, 30, Color(0, 0, 200, 255), true)); 
 		}
-
 	}
 
-	running_ = success;
-
-	return success;
+	running_ = true;
 
 }
 
@@ -56,11 +45,9 @@ void ACOppInterface :: render () {
 
 	SDL_RenderClear(renderer_.get());
 
-	// TODO: Dibujar objetos
-	background->draw(renderer_);
-	rect1->draw(renderer_);
-	rect2->draw(renderer_);
-	circle1->draw(renderer_);
+	for(const auto & object : objects_) {
+		object->draw(renderer_);
+	} 
 
 	SDL_RenderPresent(renderer_.get());
 

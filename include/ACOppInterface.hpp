@@ -1,10 +1,9 @@
 #ifndef ACOPPINTERFACE_HPP
 #define ACOPPINTERFACE_HPP
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <memory>
+#include "aux.hpp"
 
+#include "Figure.hpp"
 #include "Rectangle.hpp"
 #include "Circle.hpp"
 
@@ -26,22 +25,14 @@ class ACOppInterface {
 
 		int32_t current_frame_ = 0;
 
-		// TODO: Create a base class for all objects we will show 
-		// std::vector<> objects_;
-	
-		std::unique_ptr<Rectangle> background;
-		std::unique_ptr<Rectangle> rect1;
-		std::unique_ptr<Rectangle> rect2;
-		std::unique_ptr<Circle> circle1;
+		std::vector<std::unique_ptr<Figure> > objects_;
 	
 	public:
 
-		ACOppInterface() = default;
+		ACOppInterface(const std::string & title, const uint32_t X_POS, const uint32_t Y_POS,
+							  const uint32_t WIDTH, const uint32_t HEIGHT, const int32_t FLAGS);
+
 		~ACOppInterface() = default;
-
-
-		bool init(const std::string & title, const uint32_t X_POS, const uint32_t Y_POS,
-					 const uint32_t WIDTH, const uint32_t HEIGHT, const int32_t FLAGS);
 
 		void render();
 
