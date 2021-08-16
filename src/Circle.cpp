@@ -10,7 +10,7 @@ void Circle :: draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept {
 	if ( filled_ ) {
 		filledCircleColor(renderer.get(), x_position_, y_position_, radius_in_px_, color_.get_color());
 	} else {
-		circleColor(renderer.get(), x_position_, y_position_, radius_in_px_, color_.get_color());
+		aacircleColor(renderer.get(), x_position_, y_position_, radius_in_px_, color_.get_color());
 	}
 }
 
