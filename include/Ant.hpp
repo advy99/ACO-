@@ -1,6 +1,8 @@
 #ifndef ANT_HPP
 #define ANT_HPP
 
+#include "aux.hpp"
+#include "Graph.hpp"
 
 class Ant {
 	private:
