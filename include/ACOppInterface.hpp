@@ -28,7 +28,9 @@ class ACOppInterface {
 	public:
 
 		ACOppInterface(const std::string & title, const uint32_t X_POS, const uint32_t Y_POS,
-							  const uint32_t WIDTH, const uint32_t HEIGHT, const int32_t FLAGS);
+							const uint32_t WIDTH, const uint32_t HEIGHT, const int32_t FLAGS);
+
+		ACOppInterface(const ACOppInterface & other) = delete;
 
 		~ACOppInterface() = default;
 
@@ -50,6 +52,8 @@ class ACOppInterface {
 		uint32_t height();
 
 		std::shared_ptr<SDL_Renderer> renderer() const;
+
+		ACOppInterface & operator = (const ACOppInterface & other) = delete;
 		
 };
 
