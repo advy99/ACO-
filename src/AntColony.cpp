@@ -14,17 +14,19 @@ AntColony :: AntColony (const Graph<double> & paths, const uint16_t num_ants,
 
 }
 
-void AntColony :: clear(const std::optional<Graph<double> > & maybe_path) noexcept {
-
-	if (maybe_path) {
-		paths_ = maybe_path.value();
-	}
+void AntColony :: clear() noexcept {
 
 	if (ants_.size() > 0) {
 		init_ants(ants_.size());
 	}
 
 	pheromones_ = Graph<doubles>(paths.num_nodes());
+}
+
+void AntColony :: change_paths_and_clear(const Graph<double> & paths) noexcept {
+	paths_ = paths;
+
+	clear();
 }
 
 void AntColony :: init_ants(const uint16_t num_ants) noexcept {
@@ -36,4 +38,12 @@ void AntColony :: init_ants(const uint16_t num_ants) noexcept {
 		ant = Ant();
 	}
 
+}
+
+Graph<double> AntColony :: paths() const noexcept {
+	return paths_;
+}
+
+Graph<double> AntColony :: pheromones() const noexcept {
+	return pheromones_;
 }
