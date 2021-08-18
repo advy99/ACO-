@@ -28,8 +28,13 @@ class AntColony {
 
 		void run_simulation() noexcept;
 
-		void clear(const std::optional<Graph<double> > & maybe_path = {}) noexcept;
+		void clear() noexcept;
 
+		void change_paths_and_clear(const Graph<double> & paths) noexcept;
+
+		Graph<double> paths() const noexcept;
+
+		Graph<double> pheromones() const noexcept;
 
 
 };
