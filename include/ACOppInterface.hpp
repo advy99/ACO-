@@ -1,9 +1,9 @@
 #ifndef ACOPPINTERFACE_HPP
 #define ACOPPINTERFACE_HPP
 
-#include "aux.hpp"
+#include "Figures/aux.hpp"
 
-#include "Figure.hpp"
+#include "Figures/Figure.hpp"
 
 
 struct SDL_WindowDeleter {
