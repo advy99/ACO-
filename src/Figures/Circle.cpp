@@ -1,4 +1,4 @@
-#include "Circle.hpp"
+#include "Figures/Circle.hpp"
 
 Circle :: Circle (const int16_t x, const int16_t y, const int16_t radius_in_px,
 						const Color & color, const bool filled)

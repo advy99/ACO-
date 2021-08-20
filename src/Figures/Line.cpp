@@ -1,4 +1,4 @@
-#include "Line.hpp"
+#include "Figures/Line.hpp"
 
 Line :: Line(const int16_t x1, const int16_t y1,
 				 const int16_t x2, const int16_t y2, 

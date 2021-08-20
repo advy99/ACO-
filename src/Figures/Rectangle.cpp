@@ -1,4 +1,4 @@
-#include "Rectangle.hpp"
+#include "Figures/Rectangle.hpp"
 
 Rectangle :: Rectangle (const int16_t x, const int16_t y,
 								const int16_t width, const int16_t height,

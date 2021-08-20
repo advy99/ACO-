@@ -1,4 +1,4 @@
-#include "aux.hpp"
+#include "Figures/aux.hpp"
 
 
 template <floating_point T>

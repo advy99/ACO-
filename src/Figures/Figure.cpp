@@ -1,4 +1,4 @@
-#include "Figure.hpp"
+#include "Figures/Figure.hpp"
 
 
 Figure :: Figure (const int16_t x, const int16_t y,
