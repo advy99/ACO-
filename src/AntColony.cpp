@@ -47,3 +47,32 @@ Graph<double> AntColony :: paths() const noexcept {
 Graph<double> AntColony :: pheromones() const noexcept {
 	return pheromones_;
 }
+
+void AntColony :: run_simulation () noexcept {
+
+	bool all_ants_have_path = false;
+	bool stop_running = false;
+
+	// TODO: Define a stop condition
+	while (!stop_running) {
+		
+		all_ants_have_path = false;
+		
+		// All ants at the start of the path
+		for (Ant & ant: ants_) {
+			ant.update_position(0);	
+		}
+		
+		while (!all_ants_have_path) {
+
+		}
+
+		update_pheromones();
+
+
+	}
+	
+
+}
+
+
