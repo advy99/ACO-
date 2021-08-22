@@ -1,7 +1,6 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP 
 
-#include "aux.hpp"
 #include "Figure.hpp"
 
 class Rectangle : public Figure {

@@ -1,7 +1,8 @@
 #ifndef FIGURE_HPP
 #define FIGURE_HPP
 
-#include "aux.hpp"
+#include <memory>
+#include "sdl_headers.hpp"
 #include "Color.hpp"
 
 class Figure {

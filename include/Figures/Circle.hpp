@@ -1,7 +1,6 @@
 #ifndef CIRCLE_HPP
 #define CIRCLE_HPP 
 
-#include "aux.hpp"
 #include "Figure.hpp"
 
 class Circle : public Figure {
