@@ -1,7 +1,7 @@
 #ifndef ACOPPINTERFACE_HPP
 #define ACOPPINTERFACE_HPP
 
-#include "Figures/aux.hpp"
+#include "aux.hpp"
 
 #include "Figures/Figure.hpp"
 
