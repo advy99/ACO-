@@ -9,12 +9,11 @@ project(
 )
 
 include_dir = include_directories('include')
-src_files = []
 
-src_files += ['src/main.cpp', 'src/ACOppInterface.cpp'] 
+src_files = ['src/main.cpp', 'src/ACOppInterface.cpp', 'src/aux.cpp'] 
 
 figures_src_files = ['src/Figures/Circle.cpp', 'src/Figures/Line.cpp', 'src/Figures/Figure.cpp', 
-							'src/Figures/Rectangle.cpp', 'src/Figures/Color.cpp', 'src/Figures/aux.cpp']
+							'src/Figures/Rectangle.cpp', 'src/Figures/Color.cpp']
 
 sdl2_dep = dependency('SDL2')
 sdl2_image_dep = dependency('SDL2_image')
