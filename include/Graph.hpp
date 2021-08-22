@@ -20,7 +20,7 @@ class Graph {
 		
 		Graph() = default;
 
-		explicit Graph(const uint16_t num_nodes);
+		explicit Graph(const uint16_t num_nodes, const T value = 0);
 
 
 		// consult methods
