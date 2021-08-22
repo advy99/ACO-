@@ -26,6 +26,8 @@ class AntColony {
 
 		AntColony(const AntColony & other) = default;
 
+		~AntColony() = default;
+
 		void run_simulation() noexcept;
 
 		void clear() noexcept;
@@ -35,6 +37,8 @@ class AntColony {
 		Graph<double> paths() const noexcept;
 
 		Graph<double> pheromones() const noexcept;
+
+		AntColony & operator = (const AntColony & other) = default;
 
 
 };
