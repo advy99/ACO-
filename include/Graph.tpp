@@ -31,9 +31,9 @@ bool Graph<T> :: is_connected ( const uint16_t first_node, const uint16_t second
 		result = cost_between_nodes != 0;
 	}
 
-	result = result || first_node == second_node;
+	// result = result || first_node == second_node;
 
-	return cost(first_node, second_node) != 0 || first_node == second_node; 
+	return result; 
 }
 
 template <typename T>
