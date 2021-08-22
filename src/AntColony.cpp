@@ -2,8 +2,11 @@
 
 
 AntColony :: AntColony (const Graph<double> & paths, const uint16_t num_ants,
-								const double ants_visibility, const double pheromones_per_ant) {
+								const double ants_visibility, const double pheromones_per_ant,
+							   const double pheromones_evaporation_rate) {
 	paths_ = paths;
+
+	pheromones_evaporation_rate_ = pheromones_evaporation_rate;
 
 	pheromones_ = Graph<doubles>(paths.num_nodes());
 
