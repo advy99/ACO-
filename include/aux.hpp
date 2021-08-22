@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 
+#inclue "Random.hpp"
 #include "Figures/sdl_headers.hpp"
 
 template <typename T>
