@@ -9,3 +9,70 @@ void Ant :: update_position (const uint32_t new_position) noexcept {
 uint32_t Ant :: position() const noexcept {
 	return position_;
 }
+
+
+
+
+uint32_t Ant :: select_path (const Graph<double> & paths, 
+									  const Graph<double> & pheromones) const noexcept {
+	
+
+	uint32_t next_node;
+
+	bool explotation = Random::next_float() < explotation_behaviour_;
+
+	if (explotation) {
+	
+		double best_city_importance = std::numeric_limits<double>::infinity();
+		uint32_t best_city = 0;
+
+		// from all non-visited cities, visit the best one
+		for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
+			if (!visited(num_city, position_)) {
+				double inverse_of_distance = 1.0 / paths.cost(position_, num_city);
+				double importance = pheromones.cost(num_city, position_) * std::pow(inverse_of_distance, pheromones_importance_); 
+	
+				if (importance < best_city_importance) {
+					best_city = num_city;
+					best_city_importance = importance;
+				} 
+			}
+		}
+
+	} else {
+		// biased exploration
+
+		double total_non_visited_importance = 0.0; 
+
+		// we must get the sum of importance of non-visited nodes first to use this
+		// value next
+		for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
+			if (!visited(num_city, position_)) {
+				double inverse_of_distance = 1.0 / paths.cost(position_, num_city);
+				total_non_visited_importance += pheromones.cost(num_city, position_) * std::pow(inverse_of_distance, pheromones_importance_); 
+			}
+
+		}
+		
+
+		// get a probability for each city
+		for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
+
+			double probability_select_this = 0.0;
+
+			if (paths.is_connected(num_city, position_) && !visited(num_city) ) {
+				double inverse_of_distance = 1.0 / paths.cost(position_, num_city);
+
+				probability_select_this = pheromones.cost(position_, num_city) * std::pow(inverse_of_distance, pheromones_importance_); 
+		
+				probability_select_this /= total_non_visited_importance;
+
+			} 
+
+			// TODO: Store probabilities and select one random city based on these prob.
+
+		}
+
+	}
+
+}
