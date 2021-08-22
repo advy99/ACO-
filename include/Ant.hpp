@@ -11,6 +11,8 @@ class Ant {
 		// all ants will see the same nodes and deposit the same number of pheromones
 		static double node_visibility_;
 		static double pheromones_deposited_;
+		static double pheromones_importance_;
+		static double explotation_behaviour;
 		
 
 	public:
@@ -28,6 +30,8 @@ class Ant {
 		void update_position(const uint32_t new_position) noexcept;
 		
 		uint32_t position() const noexcept;
+
+		bool visited(const uint32_t node) const noexcept;
 
 
 		static double visibility() const noexcept;
