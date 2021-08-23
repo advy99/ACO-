@@ -13,14 +13,14 @@ include_dir = include_directories('include')
 gtest_dep = dependency('gtest')
 
 tests = executable('main_tests',
-						 'src/main_tests.cpp',
+						 ['src/main_tests.cpp'],
 						 include_directories : include_dir,
 						 dependencies: gtest_dep)
 
 test('GTests', tests)
 
 
-src_files = ['src/main.cpp', 'src/ACOppInterface.cpp', 'src/aux.cpp'] 
+src_files = ['src/main.cpp', 'src/ACOppInterface.cpp'] 
 
 figures_src_files = ['src/Figures/Circle.cpp', 'src/Figures/Line.cpp', 'src/Figures/Figure.cpp', 
 							'src/Figures/Rectangle.cpp', 'src/Figures/Color.cpp']
