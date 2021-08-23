@@ -19,7 +19,7 @@ uint16_t Graph<T> :: num_nodes() const noexcept {
 
 
 template <typename T>
-bool Graph<T> :: is_connected ( const uint16_t first_node, const uint16_t second_node) {
+bool Graph<T> :: is_connected ( const uint16_t first_node, const uint16_t second_node) const noexcept {
 
 	T cost_between_nodes = cost(first_node, second_node);
 
@@ -53,7 +53,7 @@ void Graph<T> :: connect (uint16_t first_node,  uint16_t second_node, const T co
 }
 
 template <typename T>
-T Graph<T> :: cost(const uint16_t first_node, const uint16_t second_node) const noexcept {
+T Graph<T> :: cost(uint16_t first_node, uint16_t second_node) const noexcept {
 	if ( first_node < second_node ) {
 		std::swap(first_node, second_node);
 	}
