@@ -13,5 +13,12 @@ TEST (Graph, EmptyConstructor) {
 	
 }
 
+TEST (Graph, TwoCitiesNotConnected) {
+	Graph<double> my_graph(2);
+
+	EXPECT_FALSE(my_graph.is_connected(0, 1));
+
+}
+
 
 #endif
