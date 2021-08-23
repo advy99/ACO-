@@ -2,6 +2,7 @@
 #define GRAPH_HPP 
 
 #include <vector>
+#include <algorithm>
 #include <cstdint>
 
 
@@ -28,7 +29,7 @@ class Graph {
 
 		bool is_connected(const uint16_t first_node, const uint16_t second_node) const noexcept;
 
-		T cost(const uint16_t first_node, const uint16_t second_node) const noexcept;
+		T cost(uint16_t first_node, uint16_t second_node) const noexcept;
 		
 
 		// paths modification methods
