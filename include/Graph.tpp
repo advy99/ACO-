@@ -1,6 +1,8 @@
 #ifndef GRAPH_TPP
 #define GRAPH_TPP 
 
+#include "aux.hpp"
+
 template <typename T>
 Graph<T> :: Graph (const uint16_t num_nodes, const T value) :num_nodes_(num_nodes) {
 	
@@ -26,7 +28,7 @@ bool Graph<T> :: is_connected ( const uint16_t first_node, const uint16_t second
 	bool result;
 
 	if constexpr (std::is_floating_point_v<T>) {
-		result = are_equals(cost_between_nodes, 0.0);
+		result = !are_equals(cost_between_nodes, 0.0);
 	} else {
 		result = cost_between_nodes != 0;
 	}
