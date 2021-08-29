@@ -51,10 +51,34 @@ Graph<double> AntColony :: pheromones() const noexcept {
 	return pheromones_;
 }
 
+void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
+
+	for (uint16_t i = 0; i < pheromones_.num_nodes(); i++) { 
+		for (uint16_t j = i; j < pheromones_.num_nodes(); j++) { 
+			double new_pheromones_value = 0.0;
+			
+			new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
+
+			auto i_in_best_path = std::find(best_path.begin(), best_path.end(), i);
+			auto j_in_best_path = std::find(best_path.begin(), best_path.end(), j);
+			auto distance_between_i_and_j = std::abs(std::distance(i_in_best_path, j_in_best_path));
+
+			if ( distance_between_i_and_j == 1 || distance_between_i_and_j == pheromones_.num_nodes() ) {
+				new_pheromones_value += pheromones_evaporation_rate_ * std::pow(std::accumulate(best_path.begin(), best_path.end()), -1);
+			}
+
+			pheromones_.connect(i, j, new_pheromones_value);
+		}
+	}
+	
+}
+
 void AntColony :: run_simulation () noexcept {
 
 	bool all_ants_have_path = false;
 	bool stop_running = false;
+
+	uint16_t iteration = 0;
 
 	// TODO: Define a stop condition
 	while (!stop_running) {
@@ -72,6 +96,7 @@ void AntColony :: run_simulation () noexcept {
 
 		update_pheromones();
 
+		iteration++;
 
 	}
 	
