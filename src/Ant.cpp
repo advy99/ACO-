@@ -102,3 +102,11 @@ uint32_t Ant :: select_path (const Graph<double> & paths,
 bool Ant :: visited(const uint32_t node) const noexcept {
 	return std::find(path_.begin(), path_.end(), node) != path.end();
 }
+
+void Ant :: clear_path() noexcept {
+	path_.clear();
+}
+
+std::vector<uint32_t> Ant :: get_path() const noexcept {
+	return path_;
+}

@@ -39,6 +39,9 @@ class Ant {
 
 		bool visited(const uint32_t node) const noexcept;
 
+		std::vector<uint32_t> get_path() const noexcept;
+
+		void clear_path() noexcept;
 
 		static double visibility() const noexcept;
 
