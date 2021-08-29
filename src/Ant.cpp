@@ -92,3 +92,8 @@ uint32_t Ant :: select_path (const Graph<double> & paths,
 	}
 
 }
+
+
+bool Ant :: visited(const uint32_t node) const noexcept {
+	return std::find(path_.begin(), path_.end(), node) != path.end();
+}
