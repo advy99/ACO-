@@ -6,14 +6,20 @@
 
 class Ant {
 	private:
-		uint32_t position_;
+
+		std::vector<uint32_t> path_; 
+		double path_length_;
 
 		// all ants will see the same nodes and deposit the same number of pheromones
 		static double node_visibility_;
 		static double pheromones_deposited_;
 		static double pheromones_importance_;
-		static double explotation_behaviour;
+		static double explotation_behaviour_;
 		
+		
+		uint32_t select_best_path(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
+
+		uint32_t select_path_exploring(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
 
 	public:
 
@@ -27,7 +33,7 @@ class Ant {
 
 		double calculate_pheromones(const uint32_t destination, const Graph<double> & pheromones) const noexcept;
 
-		void update_position(const uint32_t new_position) noexcept;
+		void move_to_position(const uint32_t new_position) noexcept;
 		
 		uint32_t position() const noexcept;
 
