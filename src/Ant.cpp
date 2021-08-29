@@ -52,28 +52,33 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 
 	}
 	
+	std::vector<std::pair<double, uint32_t> > probability_choose_city;
 
 	// get a probability for each city
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
 
-		double probability_select_this = 0.0;
-
 		if (paths.is_connected(num_city, position()) && !visited(num_city) ) {
 			double inverse_of_distance = 1.0 / paths.cost(position(), num_city);
 
-			probability_select_this = pheromones.cost(position(), num_city) * std::pow(inverse_of_distance, pheromones_importance_); 
+			double probability_select_this = pheromones.cost(position(), num_city) * std::pow(inverse_of_distance, pheromones_importance_); 
 	
 			probability_select_this /= total_non_visited_importance;
 
-		} 
+			table_of_probabilities.push_back(std::make_pair(probability_select_this, num_city));
 
-		// TODO: Store probabilities and select one random city based on these prob.
+		} 
 
 	}
 
-	return TODO;
+	double uniform_random = Random::next_float();
 
-	
+	std::size_t i = 0;
+	while (i < table_of_probabilities.size() && uniform_random < table_of_probabilities.at(i).first) {
+		i++;
+	}
+
+	return table_of_probabilities.at(i).second;
+
 }
 
 uint32_t Ant :: select_path (const Graph<double> & paths, 
