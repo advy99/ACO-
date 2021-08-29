@@ -1,5 +1,7 @@
 #include "Ant.hpp"
 
+Ant :: Ant(const uint32_t start_position) : path_(1, start_position), path_legth_(0)
+{}
 
 
 void Ant :: move_to_position (const uint32_t new_position) noexcept {

@@ -23,7 +23,7 @@ class Ant {
 
 	public:
 
-		explicit Ant(const uint32_t position = 0);
+		explicit Ant(const uint32_t start_position = 0);
 
 		Ant(const Ant & other) = default;
 
