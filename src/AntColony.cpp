@@ -59,6 +59,7 @@ void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
 			
 			new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
 
+			// search if two cities are next to each other in the path
 			auto i_in_best_path = std::find(best_path.begin(), best_path.end(), i);
 			auto j_in_best_path = std::find(best_path.begin(), best_path.end(), j);
 			auto distance_between_i_and_j = std::abs(std::distance(i_in_best_path, j_in_best_path));
@@ -80,21 +81,27 @@ void AntColony :: run_simulation () noexcept {
 
 	uint16_t iteration = 0;
 
+	std::vector<uint32_t> best_path;
+	double best_path_length;
+
 	// TODO: Define a stop condition
 	while (!stop_running) {
 		
 		all_ants_have_path = false;
+
+		best_path_length = std::numeric_limits<double>::infinity();
 		
-		// All ants at the start of the path
+		// All ants at the start of the path, and need to complete a route
 		for (Ant & ant: ants_) {
+			ant.clear_path();
 			ant.update_position(0);	
-		}
-		
-		while (!all_ants_have_path) {
 
+			if (ant.get_path_length() < best_path_length) {
+				best_path = ant.get_path();
+			}
 		}
 
-		update_pheromones();
+		update_pheromones(best_path);
 
 		iteration++;
 
