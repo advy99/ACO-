@@ -1,6 +1,6 @@
 #include "Ant.hpp"
 
-Ant :: Ant(const uint32_t start_position) : path_(1, start_position), path_legth_(0)
+Ant :: Ant(const uint32_t start_position) : path_(1, start_position)
 {}
 
 
@@ -109,4 +109,8 @@ void Ant :: clear_path() noexcept {
 
 std::vector<uint32_t> Ant :: get_path() const noexcept {
 	return path_;
+}
+
+double Ant :: get_path_length() const noexcept {
+	return std::accumulate(path_.begin(), path_.end());
 }

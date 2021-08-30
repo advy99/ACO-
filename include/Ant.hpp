@@ -8,7 +8,6 @@ class Ant {
 	private:
 
 		std::vector<uint32_t> path_; 
-		double path_length_;
 
 		// all ants will see the same nodes and deposit the same number of pheromones
 		static double node_visibility_;
@@ -50,6 +49,8 @@ class Ant {
 		static void set_visibility(const double visibility) noexcept;
 
 		static void set_pheromones_deposited(const double pheromones_per_ant) noexcept;
+
+		double get_path_length() const noexcept;
 
 		Ant & operator = (const Ant & other) = default; 
 
