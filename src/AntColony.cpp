@@ -2,16 +2,17 @@
 
 
 AntColony :: AntColony (const Graph<double> & paths, const uint16_t num_ants,
-								const double ants_visibility, const double pheromones_per_ant,
-							   const double pheromones_evaporation_rate) {
+							   const double pheromones_evaporation_rate,
+								const double pheromones_importance,
+								const double probability_explotation_behaviour) {
 	paths_ = paths;
 
 	pheromones_evaporation_rate_ = pheromones_evaporation_rate;
 
 	pheromones_ = Graph<doubles>(paths.num_nodes());
 
-	Ant::set_visibility(ants_visibility);
-	Ant::set_pheromones_deposited(pheromones_per_ant);
+	Ant::set_pheromones_importance(pheromones_importance);
+	Ant::set_probability_explotation_behaviour(probability_explotation_behaviour);
 
 	init_ants(num_ants);
 
@@ -94,7 +95,10 @@ void AntColony :: run_simulation () noexcept {
 		// All ants at the start of the path, and need to complete a route
 		for (Ant & ant: ants_) {
 			ant.clear_path();
-			ant.update_position(0);	
+			// Ants will start at a random position
+			ant.update_position(Random::next_int(paths_.num_nodes()));	
+
+			// TODO: Generate path for an ant, and apply the local pheromones update
 
 			if (ant.get_path_length() < best_path_length) {
 				best_path = ant.get_path();

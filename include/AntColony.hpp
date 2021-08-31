@@ -16,14 +16,14 @@ class AntColony {
 
 		void update_pheromones(const std::vector<uint32_t> & best_path);
 
-		void init_ants(const uint16_t num_ants, const double ants_visibility, 
-							const double pheromones_per_ant) noexcept;
+		void init_ants(const uint16_t num_ants) noexcept;
 
 	public:
 
 		AntColony(const Graph<double> & paths, const uint16_t num_ants, 
-					 const double ants_visibility, const double pheromones_per_ant,
-					 const double pheromones_evaporation_rate);
+					 const double pheromones_evaporation_rate = 0.1,
+					 const double pheromones_importance = 2,
+					 const double probability_explotation_behaviour = 0.9);
 
 		AntColony(const AntColony & other) = default;
 
