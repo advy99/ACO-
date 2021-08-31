@@ -87,7 +87,7 @@ uint32_t Ant :: select_path (const Graph<double> & paths,
 
 	uint32_t next_node;
 
-	bool explotation = Random::next_float() < explotation_behaviour_;
+	bool explotation = Random::next_float() < probability_explotation_behaviour_;
 
 	if (explotation) {
 		next_node = select_best_path(paths, pheromones); 
@@ -114,3 +114,28 @@ std::vector<uint32_t> Ant :: get_path() const noexcept {
 double Ant :: get_path_length() const noexcept {
 	return std::accumulate(path_.begin(), path_.end());
 }
+
+
+double Ant :: pheromones_importance() const noexcept {
+	return pheromones_importance_;
+}
+
+
+void Ant :: set_pheromones_importance(const double new_pheromones_importance) noexcept {
+	pheromones_importance_ = new_pheromones_importance;
+}
+
+double Ant :: probability_explotation_behaviour() const noexcept {
+	return probability_explotation_behaviour_;
+}
+
+
+void Ant :: set_probability_explotation_behaviour(const double new_probability) noexcept {
+	probability_explotation_behaviour_ = new_probability;
+}
+
+
+// default values from ACS paper
+double Ant :: pheromones_importance_ = 2;
+double Ant :: probability_explotation_behaviour_ = 0.9;
+

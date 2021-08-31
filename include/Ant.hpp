@@ -10,10 +10,8 @@ class Ant {
 		std::vector<uint32_t> path_; 
 
 		// all ants will see the same nodes and deposit the same number of pheromones
-		static double node_visibility_;
-		static double pheromones_deposited_;
 		static double pheromones_importance_;
-		static double explotation_behaviour_;
+		static double probability_explotation_behaviour_;
 		
 		
 		uint32_t select_best_path(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
@@ -42,13 +40,15 @@ class Ant {
 
 		void clear_path() noexcept;
 
-		static double visibility() const noexcept;
 
-		static double pheromones_deposited() const noexcept;
+		static double pheromones_importance() const noexcept;
 
-		static void set_visibility(const double visibility) noexcept;
+		static void set_pheromones_importance(const double new_pheromones_importance) noexcept;
 
-		static void set_pheromones_deposited(const double pheromones_per_ant) noexcept;
+		static double probability_explotation_behaviour() const noexcept;
+
+		static void set_probability_explotation_behaviour(const double new_probability) noexcept;
+
 
 		double get_path_length() const noexcept;
 
