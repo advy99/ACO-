@@ -53,6 +53,8 @@ Graph<double> AntColony :: pheromones() const noexcept {
 }
 
 void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
+	
+	// TODO: Dont iterate all graph, only connections of best_path
 
 	for (uint16_t i = 0; i < pheromones_.num_nodes(); i++) { 
 		for (uint16_t j = i; j < pheromones_.num_nodes(); j++) { 
@@ -75,14 +77,11 @@ void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
 	
 }
 
-void AntColony :: run_simulation () noexcept {
-
-	bool all_ants_have_path = false;
-	bool stop_running = false;
+void AntColony :: run_simulation (const uint32_t num_iterations) noexcept {
 
 	uint16_t iteration = 0;
+	bool stop_running = num_iterations == iteration;
 
-	std::vector<uint32_t> best_path;
 	double best_path_length;
 
 	// TODO: Define a stop condition
@@ -98,20 +97,34 @@ void AntColony :: run_simulation () noexcept {
 			// Ants will start at a random position
 			ant.update_position(Random::next_int(paths_.num_nodes()));	
 
-			// TODO: Generate path for an ant, and apply the local pheromones update
+			while ( ant.get_path().size() < paths_.num_nodes() ) {
+				uint32_t new_position = ant.select_path(paths_, pheromones_);
+
+				local_update_pheromones(ant.position(), new_position);
+				
+				ant.move_to_position(new_position);
+
+			}
+
 
 			if (ant.get_path_length() < best_path_length) {
-				best_path = ant.get_path();
+				best_path_ = ant.get_path();
+				best_path_length = ant.get_path_length();
 			}
 		}
 
-		update_pheromones(best_path);
+		update_pheromones(best_path_);
 
 		iteration++;
 
+		stop_running = num_iterations == iteration;
 	}
 	
 
 }
 
+
+std::vector<double> AntColony :: best_path() const noexcept {
+	return best_path_;
+}
 
