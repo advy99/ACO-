@@ -51,7 +51,7 @@ void ACOppInterface :: render () {
 	SDL_RenderClear(renderer_.get());
 
 	for(const auto & object : objects_) {
-		object->draw(renderer_);
+		object->draw(renderer_.get() );
 	} 
 
 	SDL_RenderPresent(renderer_.get());

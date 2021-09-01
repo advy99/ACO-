@@ -16,7 +16,7 @@ class Line : public Figure {
 
 		Line(const int16_t x1, const int16_t y1, const int16_t x2, const int16_t y2, const uint8_t line_width, const Color & color);
 
-		virtual void draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept override;	
+		virtual void draw(SDL_Renderer * renderer) const noexcept override;	
 
 		int16_t x_end() const noexcept;
 		int16_t y_end() const noexcept;

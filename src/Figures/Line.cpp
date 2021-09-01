@@ -6,13 +6,13 @@ Line :: Line(const int16_t x1, const int16_t y1,
 				: Figure(x1, y1, color, true), x_end_(x2), y_end_(y2), line_width_(line_width)
 {}
 
-void Line :: draw(std::shared_ptr<SDL_Renderer> renderer) const noexcept {
+void Line :: draw(SDL_Renderer * renderer) const noexcept {
 	// SDL2_gfx does not have aaThickLineColor, so lines with small widths are uglys
 	// if we dont apply anti aliasing
 	if (line_width_ > WIDTH_THICK_EPSILON) {
-		thickLineColor(renderer.get(), x_position_, y_position_, x_end_, y_end_, line_width_, color_.get_color());
+		thickLineColor(renderer, x_position_, y_position_, x_end_, y_end_, line_width_, color_.get_color());
 	} else {
-		aalineColor(renderer.get(), x_position_, y_position_, x_end_, y_end_, color_.get_color());
+		aalineColor(renderer, x_position_, y_position_, x_end_, y_end_, color_.get_color());
 	}
 }
 
