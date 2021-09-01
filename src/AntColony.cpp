@@ -20,7 +20,7 @@ AntColony :: AntColony (const Graph<double> & paths, const uint16_t num_ants,
 
 }
 
-void AntColony :: clear() noexcept {
+void AntColony :: clear() {
 
 	if (ants_.size() > 0) {
 		init_ants(ants_.size());
@@ -29,13 +29,13 @@ void AntColony :: clear() noexcept {
 	pheromones_ = Graph<doubles>(paths.num_nodes());
 }
 
-void AntColony :: change_paths_and_clear(const Graph<double> & paths) noexcept {
+void AntColony :: change_paths_and_clear(const Graph<double> & paths) {
 	paths_ = paths;
 
 	clear();
 }
 
-void AntColony :: init_ants(const uint16_t num_ants) noexcept {
+void AntColony :: init_ants(const uint16_t num_ants)  {
 
 	ants_.clear();
 	ants_.resize(num_ants);
@@ -46,11 +46,11 @@ void AntColony :: init_ants(const uint16_t num_ants) noexcept {
 
 }
 
-Graph<double> AntColony :: paths() const noexcept {
+Graph<double> AntColony :: paths() const {
 	return paths_;
 }
 
-Graph<double> AntColony :: pheromones() const noexcept {
+Graph<double> AntColony :: pheromones() const {
 	return pheromones_;
 }
 
@@ -111,7 +111,7 @@ void AntColony :: calculate_initial_pheromones() {
 }
 
 
-void AntColony :: run_simulation (const uint32_t num_iterations) noexcept {
+void AntColony :: run_simulation (const uint32_t num_iterations) {
 
 	calculate_initial_pheromones();
 
@@ -159,7 +159,7 @@ void AntColony :: run_simulation (const uint32_t num_iterations) noexcept {
 }
 
 
-std::vector<double> AntColony :: best_path() const noexcept {
+std::vector<double> AntColony :: best_path() const {
 	return best_path_;
 }
 
