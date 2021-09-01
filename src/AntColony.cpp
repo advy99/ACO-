@@ -54,7 +54,7 @@ Graph<double> AntColony :: pheromones() const {
 	return pheromones_;
 }
 
-void AntColony :: update_pheromones(const double best_path_length) {
+void AntColony :: update_pheromones(const double best_path_length) noexcept {
 	
 	for (uint32_t i = 0; i < best_path.size(); i++) {
 		double new_pheromones_value = 0.0;
