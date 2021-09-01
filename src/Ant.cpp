@@ -73,7 +73,7 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	double uniform_random = Random::next_float();
 
 	std::size_t i = 0;
-	while (i < probability_choose_city.size() && uniform_random < probability_choose_city.at(i).first) {
+	while (i < probability_choose_city.size() - 1 && uniform_random < probability_choose_city.at(i).first) {
 		i++;
 	}
 
