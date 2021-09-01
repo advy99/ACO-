@@ -41,13 +41,13 @@ class Ant {
 		void clear_path() noexcept;
 
 
-		static double pheromones_importance() const noexcept;
+		static double pheromones_importance()  ;
 
-		static void set_pheromones_importance(const double new_pheromones_importance) noexcept;
+		static void set_pheromones_importance(const double new_pheromones_importance) ;
 
-		static double probability_explotation_behaviour() const noexcept;
+		static double probability_explotation_behaviour()  ;
 
-		static void set_probability_explotation_behaviour(const double new_probability) noexcept;
+		static void set_probability_explotation_behaviour(const double new_probability) ;
 
 
 		double get_path_length() const noexcept;

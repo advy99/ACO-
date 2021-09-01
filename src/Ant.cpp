@@ -122,21 +122,21 @@ double Ant :: get_path_length() const noexcept {
 }
 
 
-double Ant :: pheromones_importance() const noexcept {
+double Ant :: pheromones_importance()   {
 	return pheromones_importance_;
 }
 
 
-void Ant :: set_pheromones_importance(const double new_pheromones_importance) noexcept {
+void Ant :: set_pheromones_importance(const double new_pheromones_importance)  {
 	pheromones_importance_ = new_pheromones_importance;
 }
 
-double Ant :: probability_explotation_behaviour() const noexcept {
+double Ant :: probability_explotation_behaviour()   {
 	return probability_explotation_behaviour_;
 }
 
 
-void Ant :: set_probability_explotation_behaviour(const double new_probability) noexcept {
+void Ant :: set_probability_explotation_behaviour(const double new_probability)  {
 	probability_explotation_behaviour_ = new_probability;
 }
 
