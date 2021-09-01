@@ -3,6 +3,7 @@
 
 
 #include "Graph.hpp"
+#include "Ant.hpp"
 
 class AntColony {
 	private:
@@ -21,6 +22,8 @@ class AntColony {
 		void local_update_pheromones(const uint32_t position, const uint32_t new_position) noexcept;
 
 		void init_ants(const uint16_t num_ants);
+		
+		void calculate_initial_pheromones();
 
 	public:
 
@@ -34,8 +37,8 @@ class AntColony {
 
 		~AntColony() = default;
 
-		void run_simulation();
-
+		std::pair<std::vector<uint32_t>, double> run_simulation (const uint32_t num_iterations);
+		
 		void clear() ;
 
 		void change_paths_and_clear(const Graph<double> & paths);
