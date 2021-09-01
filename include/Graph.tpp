@@ -46,21 +46,24 @@ void Graph<T> :: disconnect (const uint32_t first_node, const uint32_t second_no
 template <typename T>
 void Graph<T> :: connect (uint32_t first_node,  uint32_t second_node, const T cost) noexcept {
 
-	if ( first_node < second_node ) {
+	if ( first_node > second_node ) {
 		std::swap(first_node, second_node);
 	}
-	
-	paths_weights_[first_node][second_node] = cost;
+
+	// need to adjust the second index, as we dont save all the values
+	// e. (2,5) in the graph is stored at (2, 3), because we dont save
+	// the (2,0) and (2,1)
+	paths_weights_[first_node][second_node - first_node] = cost;
 
 }
 
 template <typename T>
 T Graph<T> :: cost(uint32_t first_node, uint32_t second_node) const noexcept {
-	if ( first_node < second_node ) {
+	if ( first_node > second_node ) {
 		std::swap(first_node, second_node);
 	}
 
-	return paths_weights_[first_node][second_node];
+	return paths_weights_[first_node][second_node - first_node];
 }
 
 template <typename T>
