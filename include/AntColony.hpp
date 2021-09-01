@@ -13,6 +13,7 @@ class AntColony {
 		Graph<double> pheromones_;
 
 		std::vector<Ant> ants_;
+		std::vector<double> best_path_;
 
 		void update_pheromones(const std::vector<uint32_t> & best_path);
 
@@ -38,6 +39,8 @@ class AntColony {
 		Graph<double> paths() const noexcept;
 
 		Graph<double> pheromones() const noexcept;
+
+		std::vector<double> best_path() const noexcept;
 
 		AntColony & operator = (const AntColony & other) = default;
 
