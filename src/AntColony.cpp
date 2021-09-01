@@ -77,14 +77,25 @@ void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
 	
 }
 
+void AntColony :: local_update_pheromones(const uint32_t position, const uint32_t new_position) noexcept {
+
+	double new_pheromones_value = (1 - rho_) * pheromones_.cost(position, new_position);
+
+	new_pheromones_value += rho_ * initial_pheromones_;
+	
+	pheromones_.connect(position, new_position, new_pheromones_value);
+
+}
+
 void AntColony :: run_simulation (const uint32_t num_iterations) noexcept {
+
+	calculate_initial_pheromones();
 
 	uint16_t iteration = 0;
 	bool stop_running = num_iterations == iteration;
 
 	double best_path_length;
 
-	// TODO: Define a stop condition
 	while (!stop_running) {
 		
 		all_ants_have_path = false;
