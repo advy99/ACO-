@@ -4,7 +4,7 @@ project(
 	'cpp',
 	default_options : ['cpp_std=c++20', 'warning_level=3',
 							 'optimization=2','debug=false',
-							 'werror=true'],
+							 'werror=true', 'b_sanitize=none'],
 	version : '1.0'
 )
 
