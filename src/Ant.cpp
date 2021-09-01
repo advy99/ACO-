@@ -21,7 +21,7 @@ uint32_t Ant :: select_best_path (const Graph<double> & paths,
 
 	// from all non-visited cities, visit the best one
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
-		if (!visited(num_city, position() )) {
+		if (!visited(num_city)) {
 			double inverse_of_distance = 1.0 / paths.cost(position(), num_city);
 			double importance = pheromones.cost(num_city, position()) * std::pow(inverse_of_distance, pheromones_importance_); 
 
@@ -45,7 +45,7 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	// we must get the sum of importance of non-visited nodes first to use this
 	// value next
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
-		if (!visited(num_city, position())) {
+		if (!visited(num_city)) {
 			double inverse_of_distance = 1.0 / paths.cost(position(), num_city);
 			total_non_visited_importance += pheromones.cost(num_city, position()) * std::pow(inverse_of_distance, pheromones_importance_); 
 		}
@@ -64,7 +64,7 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	
 			probability_select_this /= total_non_visited_importance;
 
-			table_of_probabilities.push_back(std::make_pair(probability_select_this, num_city));
+			probability_choose_city.push_back(std::make_pair(probability_select_this, num_city));
 
 		} 
 
@@ -73,11 +73,11 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	double uniform_random = Random::next_float();
 
 	std::size_t i = 0;
-	while (i < table_of_probabilities.size() && uniform_random < table_of_probabilities.at(i).first) {
+	while (i < probability_choose_city.size() && uniform_random < probability_choose_city.at(i).first) {
 		i++;
 	}
 
-	return table_of_probabilities.at(i).second;
+	return probability_choose_city.at(i).second;
 
 }
 
@@ -96,11 +96,12 @@ uint32_t Ant :: select_path (const Graph<double> & paths,
 		next_node = select_path_exploring(paths, pheromones); 
 	}
 
+	return next_node;
 }
 
 
 bool Ant :: visited(const uint32_t node) const noexcept {
-	return std::find(path_.begin(), path_.end(), node) != path.end();
+	return std::find(path_.begin(), path_.end(), node) != path_.end();
 }
 
 void Ant :: clear_path() noexcept {
@@ -111,11 +112,11 @@ std::vector<uint32_t> Ant :: get_path() const  {
 	return path_;
 }
 
-double Ant :: get_path_length() const noexcept {
-	double length = path_.cost(path_.size() - 1, 0);
+double Ant :: get_path_length(const Graph<double> & paths) const noexcept {
+	double length = paths.cost(path_.size() - 1, 0);
 	
 	for (uint32_t i = 0; i < path_.size() - 1; i++) {
-		length += path_.cost(i, i+1);
+		length += paths.cost(path_[i], path_[i+1]);
 	}
 
 	return length;

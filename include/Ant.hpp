@@ -50,7 +50,7 @@ class Ant {
 		static void set_probability_explotation_behaviour(const double new_probability) ;
 
 
-		double get_path_length() const noexcept;
+		double get_path_length(const Graph<double> & paths) const noexcept;
 
 		Ant & operator = (const Ant & other) = default; 
 
