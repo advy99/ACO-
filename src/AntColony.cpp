@@ -11,7 +11,7 @@ AntColony :: AntColony (const Graph<double> & paths, const uint16_t num_ants,
 	pheromones_evaporation_rate_ = pheromones_evaporation_rate;
 	rho_ = rho;
 
-	pheromones_ = Graph<doubles>(paths.num_nodes());
+	pheromones_ = Graph<double>(paths.num_nodes());
 
 	Ant::set_pheromones_importance(pheromones_importance);
 	Ant::set_probability_explotation_behaviour(probability_explotation_behaviour);
@@ -26,7 +26,7 @@ void AntColony :: clear() {
 		init_ants(ants_.size());
 	}
 
-	pheromones_ = Graph<doubles>(paths.num_nodes());
+	pheromones_ = Graph<double>(paths_.num_nodes());
 }
 
 void AntColony :: change_paths_and_clear(const Graph<double> & paths) {
@@ -90,12 +90,12 @@ void AntColony :: calculate_initial_pheromones() {
 	uint32_t best_city = 1;
 	double best_city_cost = std::numeric_limits<double>::infinity();
 
-	while(greedy_ant.get_path().size() < paths_.size()) {
+	while(greedy_ant.get_path().size() < paths_.num_nodes()) {
 		
 		uint32_t ant_position = greedy_ant.position();
 		best_city_cost = std::numeric_limits<double>::infinity();
 		
-		for ( uint32_t i = 0; i < paths_.size(); i++ ) {
+		for ( uint32_t i = 0; i < paths_.num_nodes(); i++ ) {
 			if (!greedy_ant.visited(i) && i != ant_position && paths_.cost(ant_position, i) < best_city_cost) {
 				best_city_cost = paths_.cost(ant_position, i);
 				best_city = i;
@@ -106,7 +106,7 @@ void AntColony :: calculate_initial_pheromones() {
 
 	}
 
-	initial_pheromones_ = paths_.num_nodes() * greedy_ant.get_path_length();
+	initial_pheromones_ = paths_.num_nodes() * greedy_ant.get_path_length(paths_);
 
 }
 
@@ -122,8 +122,6 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	std::vector<uint32_t> best_path;
 
 	while (!stop_running) {
-		
-		all_ants_have_path = false;
 
 		best_path_length = std::numeric_limits<double>::infinity();
 		
@@ -131,7 +129,7 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 		for (Ant & ant: ants_) {
 			ant.clear_path();
 			// Ants will start at a random position
-			ant.update_position(Random::next_int(paths_.num_nodes()));	
+			ant.move_to_position(Random::next_int(paths_.num_nodes()));	
 
 			while ( ant.get_path().size() < paths_.num_nodes() ) {
 				uint32_t new_position = ant.select_path(paths_, pheromones_);
@@ -142,10 +140,11 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 
 			}
 
+			double path_length = ant.get_path_length(paths_);
 
-			if (ant.get_path_length() < best_path_length) {
+			if (path_length < best_path_length) {
 				best_path = ant.get_path();
-				best_path_length = ant.get_path_length();
+				best_path_length = path_length;
 			}
 		}
 
@@ -158,10 +157,5 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	
 	return std::make_pair(best_path, best_path_length);
 
-}
-
-
-std::vector<double> AntColony :: best_path() const {
-	return best_path_;
 }
 
