@@ -16,7 +16,7 @@ class Ant {
 		
 		uint32_t select_best_path(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
 
-		uint32_t select_path_exploring(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
+		uint32_t select_path_exploring(const Graph<double> & paths, const Graph<double> & pheromones) const;
 
 	public:
 
@@ -26,17 +26,17 @@ class Ant {
 
 		~Ant() = default;
 
-		uint32_t select_path(const Graph<double> & paths, const Graph<double> & pheromones) const noexcept;
+		uint32_t select_path(const Graph<double> & paths, const Graph<double> & pheromones) const;
 
 		double calculate_pheromones(const uint32_t destination, const Graph<double> & pheromones) const noexcept;
 
-		void move_to_position(const uint32_t new_position) noexcept;
+		void move_to_position(const uint32_t new_position);
 		
 		uint32_t position() const noexcept;
 
 		bool visited(const uint32_t node) const noexcept;
 
-		std::vector<uint32_t> get_path() const noexcept;
+		std::vector<uint32_t> get_path() const;
 
 		void clear_path() noexcept;
 

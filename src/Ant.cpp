@@ -4,7 +4,7 @@ Ant :: Ant(const uint32_t start_position) : path_(1, start_position)
 {}
 
 
-void Ant :: move_to_position (const uint32_t new_position) noexcept {
+void Ant :: move_to_position (const uint32_t new_position) {
 	path_.push_back(new_position);
 }
 
@@ -38,7 +38,7 @@ uint32_t Ant :: select_best_path (const Graph<double> & paths,
 
 
 uint32_t Ant :: select_path_exploring(const Graph<double> & paths, 
-												  const Graph<double> & pheromones) const noexcept {
+												  const Graph<double> & pheromones) const {
 
 	double total_non_visited_importance = 0.0; 
 
@@ -82,7 +82,7 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 }
 
 uint32_t Ant :: select_path (const Graph<double> & paths, 
-									  const Graph<double> & pheromones) const noexcept {
+									  const Graph<double> & pheromones) const  {
 	
 
 	uint32_t next_node;
@@ -107,7 +107,7 @@ void Ant :: clear_path() noexcept {
 	path_.clear();
 }
 
-std::vector<uint32_t> Ant :: get_path() const noexcept {
+std::vector<uint32_t> Ant :: get_path() const  {
 	return path_;
 }
 
