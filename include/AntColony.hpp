@@ -17,7 +17,7 @@ class AntColony {
 		std::vector<Ant> ants_;
 		std::vector<double> best_path_;
 
-		void update_pheromones(const std::vector<uint32_t> & best_path);
+		void update_pheromones(const double best_path_length);
 
 		void init_ants(const uint16_t num_ants) noexcept;
 

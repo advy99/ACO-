@@ -54,27 +54,18 @@ Graph<double> AntColony :: pheromones() const noexcept {
 	return pheromones_;
 }
 
-void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path) {
+void AntColony :: update_pheromones(const double best_path_length) {
 	
-	// TODO: Dont iterate all graph, only connections of best_path
+	for (uint32_t i = 0; i < best_path.size(); i++) {
+		double new_pheromones_value = 0.0;
 
-	for (uint16_t i = 0; i < pheromones_.num_nodes(); i++) { 
-		for (uint16_t j = i; j < pheromones_.num_nodes(); j++) { 
-			double new_pheromones_value = 0.0;
+		uint32_t j = (i + 1) % best_path.size();
 			
-			new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
+		new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
 
-			// search if two cities are next to each other in the path
-			auto i_in_best_path = std::find(best_path.begin(), best_path.end(), i);
-			auto j_in_best_path = std::find(best_path.begin(), best_path.end(), j);
-			auto distance_between_i_and_j = std::abs(std::distance(i_in_best_path, j_in_best_path));
-
-			if ( distance_between_i_and_j == 1 || distance_between_i_and_j == pheromones_.num_nodes() ) {
-				new_pheromones_value += pheromones_evaporation_rate_ * std::pow(std::accumulate(best_path.begin(), best_path.end()), -1);
-			}
-
-			pheromones_.connect(i, j, new_pheromones_value);
-		}
+		new_pheromones_value += pheromones_evaporation_rate_ * std::pow(best_path_length, -1);
+		
+		pheromones_.connect(i, j, new_pheromones_value);	
 	}
 	
 }
@@ -157,7 +148,7 @@ void AntColony :: run_simulation (const uint32_t num_iterations) noexcept {
 			}
 		}
 
-		update_pheromones(best_path_);
+		update_pheromones(best_path_length);
 
 		iteration++;
 
