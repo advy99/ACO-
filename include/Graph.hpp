@@ -37,6 +37,7 @@ class Graph {
 
 		void disconnect(const uint32_t first_node, const uint32_t second_node) noexcept;
 
+		void clear(const T new_value = 0) ;
 
 
 

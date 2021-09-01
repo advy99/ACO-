@@ -63,6 +63,12 @@ T Graph<T> :: cost(uint32_t first_node, uint32_t second_node) const noexcept {
 	return paths_weights_[first_node][second_node];
 }
 
+void Graph<T> :: clear(const T new_value) {
+	for (uint32_t i = 0; i < num_nodes_; i++) {
+		paths_weights_[i] = std::vector<T>(num_nodes_ - i, new_value);
+	}
+
+}
 
 #endif
 
