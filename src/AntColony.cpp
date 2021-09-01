@@ -54,7 +54,7 @@ Graph<double> AntColony :: pheromones() const {
 	return pheromones_;
 }
 
-void AntColony :: update_pheromones(const double best_path_length) noexcept {
+void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path, const double best_path_length) noexcept {
 	
 	for (uint32_t i = 0; i < best_path.size(); i++) {
 		double new_pheromones_value = 0.0;
@@ -111,7 +111,7 @@ void AntColony :: calculate_initial_pheromones() {
 }
 
 
-void AntColony :: run_simulation (const uint32_t num_iterations) {
+std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint32_t num_iterations) {
 
 	calculate_initial_pheromones();
 
@@ -119,6 +119,7 @@ void AntColony :: run_simulation (const uint32_t num_iterations) {
 	bool stop_running = num_iterations == iteration;
 
 	double best_path_length;
+	std::vector<uint32_t> best_path;
 
 	while (!stop_running) {
 		
@@ -143,18 +144,19 @@ void AntColony :: run_simulation (const uint32_t num_iterations) {
 
 
 			if (ant.get_path_length() < best_path_length) {
-				best_path_ = ant.get_path();
+				best_path = ant.get_path();
 				best_path_length = ant.get_path_length();
 			}
 		}
 
-		update_pheromones(best_path_length);
+		update_pheromones(best_path, best_path_length);
 
 		iteration++;
 
 		stop_running = num_iterations == iteration;
 	}
 	
+	return std::make_pair(best_path, best_path_length);
 
 }
 
