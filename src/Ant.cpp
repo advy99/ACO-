@@ -112,7 +112,13 @@ std::vector<uint32_t> Ant :: get_path() const noexcept {
 }
 
 double Ant :: get_path_length() const noexcept {
-	return std::accumulate(path_.begin(), path_.end());
+	double length = path_.cost(path_.size() - 1, 0);
+	
+	for (uint32_t i = 0; i < path_.size() - 1; i++) {
+		length += path_.cost(i, i+1);
+	}
+
+	return length;
 }
 
 
