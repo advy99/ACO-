@@ -125,16 +125,11 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	uint16_t iteration = 0;
 	bool stop_running = num_iterations == iteration;
 
-	double iteration_best_path_length;
-	std::vector<uint32_t> iteration_best_path;
-
 	double global_best_path_length = std::numeric_limits<double>::infinity();
 	std::vector<uint32_t> global_best_path;
 
 	while (!stop_running) {
 
-		iteration_best_path_length = std::numeric_limits<double>::infinity();
-		
 		// All ants at the start of the path, and need to complete a route
 		for (Ant & ant: ants_) {
 			ant.clear_path();
@@ -152,11 +147,6 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 
 			double path_length = ant.get_path_length(paths_);
 
-			if (path_length < iteration_best_path_length) {
-				iteration_best_path = ant.get_path();
-				iteration_best_path_length = path_length;
-			}
-	
 			if (path_length < global_best_path_length) {
 				global_best_path_length = path_length;
 				global_best_path = ant.get_path();
