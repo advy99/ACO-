@@ -40,3 +40,11 @@ executable('main',
 			  dependencies : [sdl2_dep, sdl2_image_dep, sdl2_gfx_dep],
 			  link_with: figures_lib)
 
+
+src_cli = ['src/AntColony.cpp', 'src/Ant.cpp', 'src/ACOppCLI.cpp']
+
+
+executable('mainCLI', 
+			  sources : src_cli,
+			  include_directories: include_dir)
+
