@@ -3,10 +3,15 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 
 Graph<double> read_from_file(std::string file) {
 
 	std::ifstream f(file);
+
+	if ( !f ) {
+		throw std::runtime_error("Error opening " + file);
+	}
 
 	std::string line;
 
@@ -65,6 +70,8 @@ int main (int argc, char ** argv) {
 
 		std::exit(-1);
 	}
+	
+	Random::set_seed(std::time(nullptr));
 
 	int num_ants = std::atoi(argv[1]);
 	int iterations = std::atoi(argv[2]);
@@ -74,13 +81,7 @@ int main (int argc, char ** argv) {
 
 	Graph<double> paths = read_from_file(file);
 
-	std::cout << "\nPaths: \n\n";
-	for ( uint32_t i = 0; i < paths.num_nodes(); i++) {
-		for ( uint32_t j = i; j < paths.num_nodes(); j++) {
-			std::cout << paths.cost(i, j) << " ";
-		}
-		std::cout << "\n";
-	}
+	std::cout << "Paths read from " << file << "\n";
 	
 	std::cout << std::endl;
 
@@ -95,6 +96,13 @@ int main (int argc, char ** argv) {
 		std::cout << element << " ";
 	}
 
+	std::vector<uint32_t> uniques;
+	std::unique_copy(solution.first.begin(), solution.first.end(), std::back_inserter(uniques));
+
 	std::cout << "\n";
+	if ( uniques.size() != solution.first.size()) {
+		std::cerr << "ERROR: Somo cities are repeated\n";
+	}
+
 
 }
