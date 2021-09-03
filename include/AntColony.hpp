@@ -31,7 +31,7 @@ class AntColony {
 					 const double pheromones_evaporation_rate = 0.1,
 					 const double pheromones_importance = 2,
 					 const double probability_explotation_behaviour = 0.9,
-					 const double rho = 0.9);
+					 const double rho = 0.1);
 
 		AntColony(const AntColony & other) = default;
 
