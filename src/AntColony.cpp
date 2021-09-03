@@ -118,7 +118,6 @@ void AntColony :: calculate_initial_pheromones() {
 
 }
 
-
 std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint32_t num_iterations) {
 
 	calculate_initial_pheromones();
@@ -126,13 +125,15 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	uint16_t iteration = 0;
 	bool stop_running = num_iterations == iteration;
 
-	double best_path_length;
+	double iteration_best_path_length;
+	std::vector<uint32_t> iteration_best_path;
+
 	double global_best_path_length = std::numeric_limits<double>::infinity();
-	std::vector<uint32_t> best_path;
+	std::vector<uint32_t> global_best_path;
 
 	while (!stop_running) {
 
-		best_path_length = std::numeric_limits<double>::infinity();
+		iteration_best_path_length = std::numeric_limits<double>::infinity();
 		
 		// All ants at the start of the path, and need to complete a route
 		for (Ant & ant: ants_) {
@@ -151,25 +152,26 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 
 			double path_length = ant.get_path_length(paths_);
 
-			if (path_length < best_path_length) {
-				best_path = ant.get_path();
-				best_path_length = path_length;
+			if (path_length < iteration_best_path_length) {
+				iteration_best_path = ant.get_path();
+				iteration_best_path_length = path_length;
 			}
 	
 			if (path_length < global_best_path_length) {
 				global_best_path_length = path_length;
+				global_best_path = ant.get_path();
 			}
 
 		}
 
-		update_pheromones(best_path, global_best_path_length);
+		update_pheromones(global_best_path, global_best_path_length);
 
 		iteration++;
 
 		stop_running = num_iterations == iteration;
 	}
 	
-	return std::make_pair(best_path, best_path_length);
+	return std::make_pair(global_best_path, global_best_path_length);
 
 }
 
