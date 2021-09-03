@@ -127,6 +127,7 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	bool stop_running = num_iterations == iteration;
 
 	double best_path_length;
+	double global_best_path_length = std::numeric_limits<double>::infinity();
 	std::vector<uint32_t> best_path;
 
 	while (!stop_running) {
@@ -154,9 +155,14 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 				best_path = ant.get_path();
 				best_path_length = path_length;
 			}
+	
+			if (path_length < global_best_path_length) {
+				global_best_path_length = path_length;
+			}
+
 		}
 
-		update_pheromones(best_path, best_path_length);
+		update_pheromones(best_path, global_best_path_length);
 
 		iteration++;
 
