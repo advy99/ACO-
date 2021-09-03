@@ -16,16 +16,16 @@ uint32_t Ant :: position() const noexcept {
 uint32_t Ant :: select_best_path (const Graph<double> & paths, 
 										    const Graph<double> & pheromones) const noexcept {
 
-	double best_city_importance = std::numeric_limits<double>::infinity();
+	double best_city_importance = -1;
 	uint32_t best_city = 0;
 
 	// from all non-visited cities, visit the best one
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
-		if (!visited(num_city)) {
+		if (!visited(num_city) && paths.is_connected(num_city, position())) {
 			double inverse_of_distance = 1.0 / paths.cost(position(), num_city);
 			double importance = pheromones.cost(num_city, position()) * std::pow(inverse_of_distance, pheromones_importance_); 
 
-			if (importance < best_city_importance) {
+			if (importance > best_city_importance) {
 				best_city = num_city;
 				best_city_importance = importance;
 			} 
@@ -45,7 +45,7 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	// we must get the sum of importance of non-visited nodes first to use this
 	// value next
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
-		if (!visited(num_city)) {
+		if (!visited(num_city) && paths.is_connected(num_city, position())) {
 			double inverse_of_distance = 1.0 / paths.cost(position(), num_city);
 			total_non_visited_importance += pheromones.cost(num_city, position()) * std::pow(inverse_of_distance, pheromones_importance_); 
 		}
@@ -53,6 +53,8 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	}
 	
 	std::vector<std::pair<double, uint32_t> > probability_choose_city;
+
+	double total_sum = 0.0;
 
 	// get a probability for each city
 	for (uint32_t num_city = 0; num_city < paths.num_nodes(); num_city++) {
@@ -64,7 +66,9 @@ uint32_t Ant :: select_path_exploring(const Graph<double> & paths,
 	
 			probability_select_this /= total_non_visited_importance;
 
-			probability_choose_city.push_back(std::make_pair(probability_select_this, num_city));
+			total_sum += probability_select_this;
+
+			probability_choose_city.push_back(std::make_pair(total_sum, num_city));
 
 		} 
 
@@ -87,13 +91,17 @@ uint32_t Ant :: select_path (const Graph<double> & paths,
 
 	uint32_t next_node;
 
-	bool explotation = Random::next_float() < probability_explotation_behaviour_;
+	bool explotation = Random::next_float() <= probability_explotation_behaviour_;
 
 	if (explotation) {
 		next_node = select_best_path(paths, pheromones); 
 
 	} else {
 		next_node = select_path_exploring(paths, pheromones); 
+	}
+
+	if (visited(next_node)) {
+		throw std::runtime_error("Error selecting next node, visiting a node already visited");
 	}
 
 	return next_node;
