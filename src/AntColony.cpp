@@ -56,16 +56,34 @@ Graph<double> AntColony :: pheromones() const {
 
 void AntColony :: update_pheromones(const std::vector<uint32_t> & best_path, const double best_path_length) noexcept {
 	
-	for (uint32_t i = 0; i < best_path.size(); i++) {
-		double new_pheromones_value = 0.0;
+	for (uint32_t i = 0; i < pheromones_.num_nodes(); i++ ){
+		for ( uint32_t j = i + 1; j < pheromones_.num_nodes(); j++) {
+			double new_pheromones_value = 0.0;
 
-		uint32_t j = (i + 1) % best_path.size();
-			
-		new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
+			new_pheromones_value = (1 - pheromones_evaporation_rate_) * pheromones_.cost(i, j);
 
-		new_pheromones_value += pheromones_evaporation_rate_ * std::pow(best_path_length, -1);
-		
-		pheromones_.connect(i, j, new_pheromones_value);	
+			auto i_in_best_path = std::find(best_path.begin(), best_path.end(), i);
+
+			// if i is in the best path
+			if (i_in_best_path != best_path.end()) {
+
+				// check if j is also in best path too
+				auto j_in_best_path = std::find(best_path.begin(), best_path.end(), j);
+
+				if (j_in_best_path != best_path.end()) {
+					// if both are in best path and are next to each other
+					int32_t distance = std::distance(i_in_best_path, j_in_best_path);
+					uint32_t abs_distance = std::abs(distance);
+					if (abs_distance == 1 || abs_distance == pheromones_.num_nodes() - 1){
+						new_pheromones_value += pheromones_evaporation_rate_ * std::pow(best_path_length, -1);
+					}
+
+				}
+
+			}
+
+			pheromones_.connect(i, j, new_pheromones_value);	
+		}
 	}
 	
 }
@@ -134,9 +152,9 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 		for (Ant & ant: ants_) {
 			ant.clear_path();
 			// Ants will start at a random position
-			ant.move_to_position(Random::next_int(paths_.num_nodes()));	
+			ant.move_to_position(Random::next_int(paths_.num_nodes()));
 
-			while ( ant.get_path().size() < paths_.num_nodes() ) {
+			for (uint32_t i = 0; i < paths_.num_nodes() - 1; i++) {
 				uint32_t new_position = ant.select_path(paths_, pheromones_);
 
 				local_update_pheromones(ant.position(), new_position);
