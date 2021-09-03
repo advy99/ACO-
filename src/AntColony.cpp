@@ -108,6 +108,14 @@ void AntColony :: calculate_initial_pheromones() {
 
 	initial_pheromones_ = paths_.num_nodes() * greedy_ant.get_path_length(paths_);
 
+	std::vector<uint32_t> path = greedy_ant.get_path();
+
+	for ( uint32_t i = 0; i < path.size() - 1; i++) {
+		pheromones_.connect(i, i+1, initial_pheromones_);
+	}
+
+	pheromones_.connect(path.front(), path.back(), initial_pheromones_);
+
 }
 
 
