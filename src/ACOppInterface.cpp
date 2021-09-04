@@ -32,6 +32,8 @@ ACOppInterface :: ACOppInterface ( const std::string & title,
 			// TODO: Inicializar los objetos que tengamos
 			SDL_SetRenderDrawColor(renderer_.get(), 0, 0, 0, 255);
 
+			objects_.push_back(std::make_unique<Rectangle>(0, 0, WIDTH, HEIGHT));
+
 		}
 	}
 
