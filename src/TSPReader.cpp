@@ -1,7 +1,7 @@
 #include "TSPReader.hpp"
 
 
-double TSPReader :: calculate_distance (const Point & p1, const Point & p2, const EdgeWeightTypes edge_type) {
+double TSPReader :: calculate_distance (const Point & p1, const Point & p2, const EdgeWeightTypes & edge_type) {
 
 	double result = 0.0;
 
@@ -20,7 +20,7 @@ double TSPReader :: calculate_distance (const Point & p1, const Point & p2, cons
 
 
 std::pair<Graph<double>, std::vector<Point> > TSPReader :: read_from_file(const std::string & file) {
-	ifstream file_reader(file);
+	std::ifstream file_reader(file);
 
 	if (!file_reader) {
 		throw std::runtime_error("Could not open " + file);
@@ -89,20 +89,21 @@ std::pair<Graph<double>, std::vector<Point> > TSPReader :: read_from_file(const 
 			file_reader >> word;
 		}
 
-		for (Point & p: points) {
+		for (int32_t i = 0; i < dimension; i++) {
 			// first word is the num of the city
 			file_reader >> word;
-			file_reader >> p.x;
-			file_reader >> p.y;
+			file_reader >> points[i].x;
+			file_reader >> points[i].y;
 		}
 
 		paths = Graph<double>(points.size());
 
-		for (uint32_t i = 0; i < points.size() - 1; i++) {
-			paths.connect(i, i + 1, calculate_distance(points[i], points[i + 1]));
+		for (uint32_t i = 0; i < points.size(); i++) {
+			for(uint32_t j = i + 1; j < points.size(); j++) {
+				paths.connect(i, j, calculate_distance(points[i], points[j], edge_type));
+			}
 		}
 		
-		paths.connect(0, points.size() - 1, calculate_distance(points.front(), points.back());
 
 	}
 

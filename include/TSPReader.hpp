@@ -6,6 +6,7 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
+#include <sstream>
 
 enum class EdgeWeightTypes {EUCLIDEAN_2D, UNKNOWN};
 
