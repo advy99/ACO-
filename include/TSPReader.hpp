@@ -3,6 +3,10 @@
 
 #include "Graph.hpp"
 
+#include <vector>
+#include <cmath>
+#include <fstream>
+
 enum class EdgeWeightTypes {EUCLIDEAN_2D, UNKNOWN};
 
 struct Point {
@@ -16,7 +20,8 @@ class TSPReader {
 
 	public:
 		
-		static Graph<double> read_from_file(const std::string & file);
+		static std::pair<Graph<double>, std::vector<Point> > read_from_file(const std::string & file);
+		static Graph<double> read_matrix_from_file(const std::string & file);
 
 };
 
