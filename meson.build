@@ -41,7 +41,7 @@ executable('main',
 			  link_with: figures_lib)
 
 
-src_cli = ['src/AntColony.cpp', 'src/Ant.cpp', 'src/ACOppCLI.cpp']
+src_cli = ['src/AntColony.cpp', 'src/Ant.cpp', 'src/ACOppCLI.cpp', 'src/TSPReader.cpp']
 
 
 executable('mainCLI', 
