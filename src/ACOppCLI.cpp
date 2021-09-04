@@ -2,8 +2,6 @@
 #include "TSPReader.hpp"
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <chrono>
 
 
@@ -31,7 +29,7 @@ int main (int argc, char ** argv) {
 	std::cout << std::endl;
 
 	std::cout << "Creating colony and simulating: \n";
-	AntColony my_colony(paths, num_ants);
+	AntColony my_colony(paths.first, num_ants);
 
 	auto solution = my_colony.run_simulation(iterations);
 
