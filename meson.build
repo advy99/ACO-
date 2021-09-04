@@ -19,8 +19,10 @@ tests = executable('main_tests',
 
 test('GTests', tests)
 
+ants_src = ['src/AntColony.cpp', 'src/Ant.cpp', 'src/TSPReader.cpp']
 
-src_files = ['src/main.cpp', 'src/ACOppInterface.cpp'] 
+src_files = ['src/main.cpp', 'src/ACOppInterface.cpp'] + ants_src 
+
 
 figures_src_files = ['src/Figures/Circle.cpp', 'src/Figures/Line.cpp', 'src/Figures/Figure.cpp', 
 							'src/Figures/Rectangle.cpp', 'src/Figures/Color.cpp']
@@ -41,7 +43,7 @@ executable('main',
 			  link_with: figures_lib)
 
 
-src_cli = ['src/AntColony.cpp', 'src/Ant.cpp', 'src/ACOppCLI.cpp', 'src/TSPReader.cpp']
+src_cli = ['src/ACOppCLI.cpp'] + ants_src
 
 
 executable('mainCLI', 
