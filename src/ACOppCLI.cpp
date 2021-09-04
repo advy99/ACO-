@@ -39,13 +39,4 @@ int main (int argc, char ** argv) {
 		std::cout << element << " ";
 	}
 
-	std::vector<uint32_t> uniques;
-	std::unique_copy(solution.first.begin(), solution.first.end(), std::back_inserter(uniques));
-
-	std::cout << "\n";
-	if ( uniques.size() != solution.first.size()) {
-		std::cerr << "ERROR: Somo cities are repeated\n";
-	}
-
-
 }
