@@ -52,6 +52,8 @@ class ACOppInterface {
 		uint32_t height();
 
 		std::shared_ptr<SDL_Renderer> renderer() const;
+	
+		void add_object(std::unique_ptr<Figure> && object);
 
 		ACOppInterface & operator = (const ACOppInterface & other) = delete;
 		
