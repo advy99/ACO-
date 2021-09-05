@@ -19,7 +19,7 @@ const uint32_t WIDTH = 640;
 const uint32_t HEIGHT = 480;
 
 const uint32_t CIRCLE_RADIUS = 5;
-const uint32_t LINE_WIDTH = 2;
+const uint32_t LINE_WIDTH = 3;
 
 
 std::vector<Point> adjust_points(const std::vector<Point> & points, const uint32_t WIDTH, const uint32_t HEIGHT) {
@@ -49,15 +49,15 @@ std::vector<Point> adjust_points(const std::vector<Point> & points, const uint32
 
 }
 
-std::vector<std::unique_ptr<Figure> > generate_lines(const std::vector<Point> & points, const std::vector<uint32_t> & best_path) {
+std::vector<std::unique_ptr<Figure> > generate_lines(const std::vector<Point> & points, const std::vector<uint32_t> & best_path, const Color & color) {
 	std::vector<std::unique_ptr<Figure> > solution;
 
 	for (uint32_t i = 0; i < best_path.size() - 1; i++) {
 		solution.push_back(std::make_unique<Line>(points[best_path[i]].x, points[best_path[i]].y,
-															 points[best_path[i + 1]].x, points[best_path[i + 1]].y, LINE_WIDTH, Color(0, 0, 200, 255)));
+															 points[best_path[i + 1]].x, points[best_path[i + 1]].y, LINE_WIDTH, color));
 	}
 	solution.push_back(std::make_unique<Line>(points[best_path.front()].x, points[best_path.front()].y,
-															  points[best_path.back()].x, points[best_path.back()].y, LINE_WIDTH, Color(0, 0, 200, 255)));
+															  points[best_path.back()].x, points[best_path.back()].y, LINE_WIDTH, color));
 
 	return solution;
 }
@@ -105,6 +105,10 @@ void run_interface(int argc, char ** argv) {
 	std::coroutine_handle<ReturnObject::promise_type> generator =  my_colony.run_step_simulation();
 	ReturnObject::promise_type & promise = generator.promise();
 
+	Color blue = Color(0, 0, 255, 255);
+	Color red = Color(255, 0, 0, 255);
+	Color actual_color = red;
+
 	while ( interface.running() ) {
 		uint32_t frame_start, frame_time;
 		frame_start = SDL_GetTicks();
@@ -121,7 +125,10 @@ void run_interface(int argc, char ** argv) {
 			
 			auto iteration_solution = promise.val_;
 
-			interface.change_lines(generate_lines(points, iteration_solution.first));
+			if (num_iterations == iterations - 1) {
+				actual_color = blue;
+			}
+			interface.change_lines(generate_lines(points, iteration_solution.first, actual_color));
 
 			generator();
 
