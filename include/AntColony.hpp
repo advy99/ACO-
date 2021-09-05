@@ -2,8 +2,33 @@
 #define ANTCOLONY_HPP 
 
 
+#include <coroutine>
+
 #include "Graph.hpp"
 #include "Ant.hpp"
+
+
+struct ReturnObject {
+	struct promise_type {
+		std::pair<std::vector<uint32_t>, double> val_;
+		ReturnObject get_return_object() {
+			return {std::coroutine_handle<promise_type>::from_promise(*this)}; 
+		}
+
+		std::suspend_never initial_suspend() { return {}; }
+		std::suspend_never final_suspend() noexcept { return {}; }
+		std::suspend_always yield_value(std::pair<std::vector<uint32_t>, double> value){
+			val_ = value;
+
+			return {};
+		}
+		void unhandled_exception() {}
+	};
+
+	std::coroutine_handle<promise_type> h_; 
+	ReturnObject(std::coroutine_handle<promise_type> h):h_{h}{ } 
+	operator std::coroutine_handle<promise_type>() const { return h_; } 
+};
 
 class AntColony {
 	private:
@@ -38,6 +63,10 @@ class AntColony {
 		~AntColony() = default;
 
 		std::pair<std::vector<uint32_t>, double> run_simulation (const uint32_t num_iterations);
+
+		std::pair<std::vector<uint32_t>, double> run_iteration();
+
+		ReturnObject run_step_simulation ();
 		
 		void clear() ;
 

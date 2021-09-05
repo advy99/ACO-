@@ -136,6 +136,40 @@ void AntColony :: calculate_initial_pheromones() {
 
 }
 
+std::pair<std::vector<uint32_t>, double> AntColony :: run_iteration() {
+
+	std::vector<uint32_t> best_iteration_path;
+	double best_iteration_path_length = std::numeric_limits<double>::infinity();
+
+	// All ants at the start of the path, and need to complete a route
+	for (Ant & ant: ants_) {
+		ant.clear_path();
+		// Ants will start at a random position
+		ant.move_to_position(Random::next_int(paths_.num_nodes()));
+
+		for (uint32_t i = 0; i < paths_.num_nodes() - 1; i++) {
+			uint32_t new_position = ant.select_path(paths_, pheromones_);
+
+			local_update_pheromones(ant.position(), new_position);
+			
+			ant.move_to_position(new_position);
+
+		}
+
+		double path_length = ant.get_path_length(paths_);
+
+		if (path_length < best_iteration_path_length) {
+			best_iteration_path_length = path_length;
+			best_iteration_path = ant.get_path();
+		}
+
+	}
+	
+	return std::make_pair(best_iteration_path, best_iteration_path_length);
+
+}
+
+
 std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint32_t num_iterations) {
 
 	calculate_initial_pheromones();
@@ -148,28 +182,11 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 
 	while (!stop_running) {
 
-		// All ants at the start of the path, and need to complete a route
-		for (Ant & ant: ants_) {
-			ant.clear_path();
-			// Ants will start at a random position
-			ant.move_to_position(Random::next_int(paths_.num_nodes()));
+		auto iteration_solution = run_iteration();
 
-			for (uint32_t i = 0; i < paths_.num_nodes() - 1; i++) {
-				uint32_t new_position = ant.select_path(paths_, pheromones_);
-
-				local_update_pheromones(ant.position(), new_position);
-				
-				ant.move_to_position(new_position);
-
-			}
-
-			double path_length = ant.get_path_length(paths_);
-
-			if (path_length < global_best_path_length) {
-				global_best_path_length = path_length;
-				global_best_path = ant.get_path();
-			}
-
+		if (iteration_solution.second < global_best_path_length) {
+			global_best_path = iteration_solution.first;
+			global_best_path_length = iteration_solution.second;
 		}
 
 		update_pheromones(global_best_path, global_best_path_length);
@@ -180,6 +197,34 @@ std::pair<std::vector<uint32_t>, double> AntColony :: run_simulation (const uint
 	}
 	
 	return std::make_pair(global_best_path, global_best_path_length);
+
+}
+
+ReturnObject AntColony :: run_step_simulation () {
+
+	calculate_initial_pheromones();
+
+	uint16_t iteration = 0;
+
+	double global_best_path_length = std::numeric_limits<double>::infinity();
+	std::vector<uint32_t> global_best_path;
+
+	while (true) {
+
+		auto iteration_solution = run_iteration();
+
+		if (iteration_solution.second < global_best_path_length) {
+			global_best_path = iteration_solution.first;
+			global_best_path_length = iteration_solution.second;
+		}
+
+		update_pheromones(global_best_path, global_best_path_length);
+
+		iteration++;
+
+		co_yield std::make_pair(global_best_path, global_best_path_length);
+
+	}
 
 }
 
