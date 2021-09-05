@@ -24,6 +24,8 @@ class ACOppInterface {
 		int32_t current_frame_ = 0;
 
 		std::vector<std::unique_ptr<Figure> > objects_;
+
+		std::unique_ptr<Figure> background_;
 	
 	public:
 
