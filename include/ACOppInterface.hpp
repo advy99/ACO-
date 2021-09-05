@@ -23,7 +23,8 @@ class ACOppInterface {
 
 		int32_t current_frame_ = 0;
 
-		std::vector<std::unique_ptr<Figure> > objects_;
+		std::vector<std::unique_ptr<Figure> > cities_;
+		std::vector<std::unique_ptr<Figure> > lines_;
 
 		std::unique_ptr<Figure> background_;
 	
@@ -44,7 +45,9 @@ class ACOppInterface {
 
 		void handle_events();
 
-		void clean();
+		void clear_cities();
+
+		void clear_lines();
 
 		bool running() const;
 
@@ -55,7 +58,11 @@ class ACOppInterface {
 
 		std::shared_ptr<SDL_Renderer> renderer() const;
 	
-		void add_object(std::unique_ptr<Figure> && object);
+		void add_city(std::unique_ptr<Figure> && object);
+
+		void add_line(std::unique_ptr<Figure> && object);
+
+		void change_lines(std::vector<std::unique_ptr<Figure> > && new_lines);
 
 		ACOppInterface & operator = (const ACOppInterface & other) = delete;
 		

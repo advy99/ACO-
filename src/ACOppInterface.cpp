@@ -47,8 +47,12 @@ void ACOppInterface :: render () {
 
 	background_->draw(renderer_.get());
 
-	for(const auto & object : objects_) {
-		object->draw(renderer_.get() );
+	for(const auto & city : cities_) {
+		city->draw(renderer_.get() );
+	} 
+
+	for(const auto & line : lines_) {
+		line->draw(renderer_.get() );
 	} 
 
 	SDL_RenderPresent(renderer_.get());
@@ -70,9 +74,26 @@ void ACOppInterface :: handle_events() {
 
 }
 
-void ACOppInterface :: add_object(std::unique_ptr<Figure> && object)  {
-	objects_.push_back(std::move(object));
+void ACOppInterface :: add_city(std::unique_ptr<Figure> && object)  {
+	cities_.push_back(std::move(object));
 }
+
+void ACOppInterface :: clear_cities() {
+	cities_.clear();
+}
+
+void ACOppInterface :: add_line(std::unique_ptr<Figure> && object)  {
+	lines_.push_back(std::move(object));
+}
+
+void ACOppInterface :: clear_lines() {
+	lines_.clear();
+}
+
+void ACOppInterface :: change_lines(std::vector<std::unique_ptr<Figure> > && new_lines) {
+	lines_ = std::move(new_lines);
+}
+
 
 std::shared_ptr<SDL_Renderer> ACOppInterface :: renderer() const {
 	return renderer_;
